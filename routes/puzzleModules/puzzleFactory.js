@@ -11,3 +11,7 @@ const normalPuzzles = {
 exports.getNormalPuzzle = function(){
   normalPuzzles.getRandom(); //TODO random array element?
 }
+
+exports.getFinalPuzzle = function(){
+  //TODO
+}

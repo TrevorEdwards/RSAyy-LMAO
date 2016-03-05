@@ -88,7 +88,7 @@ function generateRSAkeys(){
     privkey = Math.floor(Math.random()*(899) + 100);
   } while (!isPrime(privkey));
   var phi = (p-1)*(q-1);
-  
+
   var inverse = function(privkey, phi) {
     var b0 = phi
     var t;
@@ -113,15 +113,20 @@ function generateRings(ringCount){
   var rings = [];
   for(var i = 0; i < ringCount; i++){
     //Generate the answer
-    ans = {};
+    ans = puzzleAnswer(i);
     //Add a puzzle
     var puzzle = puzzleFactory.getNormalPuzzle();
     rings.push(puzzle.getPrompt(ans));
     gSolutions[i] = ans;
   }
+  //Last ring
+  var final = puzzleFactory.getFinalPuzzle();
+  rings
+    .push(final.getPrompt(gFinalPuzzleAnswer)); //TODO: store final puzzle answer
 }
 
 // Returns an object containing the three words that are a puzzle's answer
+// Uses the puzzle key
 function puzzleAnswer(ringIndex){
 
 }
@@ -140,7 +145,13 @@ function checkAnswer(uid, ans){
 
 // Advances the user in the game
 function advanceUser(uid){
-
+  var ringNum = gGame.players.get(uid).ring;
+  if (ringNum < gSolutions.length + 1){
+    gGame.players.get(uid).ring++;
+  } else {
+    //looks like they won. WOOHOO
+    //TODO What do we do when someone wins?
+  }
 }
 
 //Maps up to three digits to a word
@@ -188,9 +199,9 @@ function isPrime(n) {
 
 
 function leastFactor(n){
-  if (n%2==0) return 2;  
-  if (n%3==0) return 3;  
-  if (n%5==0) return 5;  
+  if (n%2==0) return 2;
+  if (n%3==0) return 3;
+  if (n%5==0) return 5;
   var m = Math.sqrt(n);
   for (var i=7;i<=m;i+=30) {
     if (n%i==0)      return i;
