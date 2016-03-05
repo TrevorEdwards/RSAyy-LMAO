@@ -1,6 +1,6 @@
 // //Holds game state.  Make sure to use databases guys.
-var mongodb = require('shareddb'),
-    puzzleFactory = require('puzzleFactory');
+//var mongodb = require('shareddb'),
+var puzzleFactory = require('./puzzleModules/puzzleFactory');
 // app.get('/puzzleInfo/:uid/:n', game.getPuzzleInfo); //Get info of puzzle n for user uid
 // app.get('/mapInfo/:uid', game.getMapInfo); //Get map info for uid.  Sends a map id #
 // app.get('/gameStatus/:uid', game.getGameStatus); //Data on whether the game has ended, what the map identifier is for uid
@@ -55,4 +55,3 @@ function createUid(name) {
 	var uid = name + num;
 	return uid;
 }
-

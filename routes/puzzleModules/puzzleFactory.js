@@ -2,12 +2,12 @@
 a three word solution, and the puzzle must create a prompt around that.
 **/
 
-var caesar = require('caesar');
+var caesar = require('./caesar');
 
 const normalPuzzles = {
   caesar
 }
 
-exports.getNormalPuzzle() = function(){
+exports.getNormalPuzzle = function(){
   normalPuzzles.getRandom(); //TODO random array element?
 }
