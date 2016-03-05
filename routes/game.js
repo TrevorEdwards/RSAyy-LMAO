@@ -9,6 +9,9 @@ var puzzleFactory = require('./puzzleModules/puzzleFactory');
 
 //IMPORTANT CONSTANTS~~~~~~~~~~~~~~~~~~~~~~~~~
 //TODO since some of these could end up in DB.  Feel free to put stuff here though
+var gMapNumber = 0; // Update sequence number of map
+var gGameNumber = 0; // Game sequence number
+var gGame = {};
 
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
@@ -54,4 +57,31 @@ function createUid(name) {
 	num = num.substring(num.length - 5);
 	var uid = name + num;
 	return uid;
+}
+
+// Starts next round of game
+function newGame(ringCount) {
+  gMapNumber = 0; // Update sequence number of map
+  gGameNumber++; // Game sequence number
+
+  var rSAObj = generateRSA();
+  var rings = generateRings();
+  var players = [];
+
+  gGame = {
+    rSAObj,
+    rings,
+    players,
+    
+  };
+}
+
+// Generates RSA, returning an object of p1, p2, n (?)
+function generateRSA(){
+
+}
+
+// Creates a list of puzzles representing each ring
+function generateRings(ringCount){
+
 }
