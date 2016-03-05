@@ -47,3 +47,10 @@ exports.proposeSolution = function(req, res) {
 };
 
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function createUid(name) {
+	var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
+	num = num.substring(num.length - 5);
+	var uid = name + num;
+	return uid;
+}
+
