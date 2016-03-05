@@ -3,6 +3,8 @@ var express = require('express'),
     app = express(),
     http = require('http');
 
+//http://rsalmao.azurewebsites.net/    
+
 var server_port = 8080 //process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = 127.0.0.1 //process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
