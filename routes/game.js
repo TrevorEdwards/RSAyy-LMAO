@@ -61,7 +61,7 @@ function newGame(ringCount) {
   gGameNumber++; // Game sequence number
   gPlyN = {};
 
-  var rSAObj = generateRSA();
+  var rSAObj = generateRSAkeys();
   var rings = generateRings();
   var players = new Map();
 
@@ -74,8 +74,38 @@ function newGame(ringCount) {
 }
 
 // Generates RSA, returning an object of p1, p2, n (?)
-function generateRSA(){
+function generateRSAkeys(){
+  var p = 0;
+  var q = 0;
+  var privkey = 0;
+  do {
+    p = Math.floor((Math.random()+1)*50000);
+  } while (!isPrime(p));
+  do {
+    q = Math.floor((Math.random()+1)*50000);
+  } while (!isPrime(q) || q==p);
+  do {
+    privkey = Math.floor(Math.random()*(899) + 100);
+  } while (!isPrime(privkey));
+  var phi = (p-1)*(q-1);
+  
+  var inverse = function(privkey, phi) {
+    var b0 = phi
+    var t;
+    var q;
+    var x0 = 0, x1 = 1;
+    if (phi == 1) return 1;
+    while (privkey > 1) {
+      q = Math.floor(privkey / phi);
+      t = phi, phi = privkey % phi, privkey = t;
+      t = x0, x0 = x1 - q * x0, x1 = t;
+    }
+    if (x1 < 0) x1 += b0;
+    return x1;
+  }
 
+  var pubkey = inverse(privkey, phi);
+  return {p:p, q:q, privkey:privkey, pubkey:pubkey};
 }
 
 // Creates a list of puzzles representing each ring
@@ -150,3 +180,27 @@ function getUsername(uid) {
     }
     return "This uid does not exist.";
 }
+
+function isPrime(n) {
+  if (n==leastFactor(n)) return true;
+  return false;
+};
+
+
+function leastFactor(n){
+  if (n%2==0) return 2;  
+  if (n%3==0) return 3;  
+  if (n%5==0) return 5;  
+  var m = Math.sqrt(n);
+  for (var i=7;i<=m;i+=30) {
+    if (n%i==0)      return i;
+    if (n%(i+4)==0)  return i+4;
+    if (n%(i+6)==0)  return i+6;
+    if (n%(i+10)==0) return i+10;
+    if (n%(i+12)==0) return i+12;
+    if (n%(i+16)==0) return i+16;
+    if (n%(i+22)==0) return i+22;
+    if (n%(i+24)==0) return i+24;
+  }
+  return n;
+};
