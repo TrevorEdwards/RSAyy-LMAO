@@ -12,6 +12,7 @@ var puzzleFactory = require('./puzzleModules/puzzleFactory');
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
 var gGame = {};
+var gPlyN = {}; //All player names
 
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
@@ -51,28 +52,17 @@ exports.proposeSolution = function(req, res) {
 
 };
 
-var uidMap = new Map();
-
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-function addUid(name, uidMap) {
-    var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
-    num = num.substring(num.length - 5);
-    var uid = name + num;
-    if (uidMap.has(uid)) {
-        addUid(name, uidMap);
-    } else {
-        uidMap.set(uid, name);
-    }
-}
 
 // Starts next round of game
 function newGame(ringCount) {
   gMapNumber = 0; // Update sequence number of map
   gGameNumber++; // Game sequence number
+  gPlyN = {};
 
   var rSAObj = generateRSA();
   var rings = generateRings();
-  var players = [];
+  var players = new Map();
 
   gGame = {
     rSAObj,
@@ -92,8 +82,33 @@ function generateRings(ringCount){
 
 }
 
+//Adds a player to the current game.
+//Returns false if player name already exists
+function addPlayer(name){
+  if(gPlyN[name]) return false;
 
-function getUsername(uid, uidMap) {
+  var ply = {};
+
+  var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
+  num = num.substring(num.length - 5);
+  var uid = name + num;
+
+  ply.uid = uid;
+  ply.ring = 0;
+  ply.name = name;
+
+  if (uidMap.has(uid)) {
+      return false;
+  } else {
+      uidMap.set(uid, ply);
+      gPlyN[name] = true;
+      return true;
+  }
+
+}
+
+
+function getUsername(uid) {
     if (uidMap.has(uid)) {
         return uidMap.get(uid);
     }
