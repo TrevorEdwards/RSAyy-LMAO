@@ -13,7 +13,7 @@ var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
 var gGame = {};
 var gPlyN = {}; //All player names
-var gSolutions [];
+var gSolutions = [];
 
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
