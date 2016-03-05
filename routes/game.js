@@ -79,7 +79,19 @@ function generateRSA(){
 
 // Creates a list of puzzles representing each ring
 function generateRings(ringCount){
+  var rings = [];
+  for(var i = 0; i < ringCount; i++){
+    //Generate the answer
+    ans = {};
+    //Add a puzzle
+    var puzzle = puzzleFactory.getNormalPuzzle();
+    rings.push(puzzle.getPrompt(ans));
+  }
+}
 
+//Maps up to three digits to a word
+function numToWord(num){
+  return "placeholder";
 }
 
 //Adds a player to the current game.
