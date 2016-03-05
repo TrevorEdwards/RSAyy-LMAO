@@ -12,6 +12,8 @@ var puzzleFactory = require('./puzzleModules/puzzleFactory');
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
 var gGame = {};
+var gPlyN = {}; //All player names
+var gSolutions = [];
 
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
@@ -51,28 +53,17 @@ exports.proposeSolution = function(req, res) {
 
 };
 
-var uidMap = new Map();
-
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-function addUid(name, uidMap) {
-    var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
-    num = num.substring(num.length - 5);
-    var uid = name + num;
-    if (uidMap.has(uid)) {
-        addUid(name, uidMap);
-    } else {
-        uidMap.set(uid, name);
-    }
-}
 
 // Starts next round of game
 function newGame(ringCount) {
   gMapNumber = 0; // Update sequence number of map
   gGameNumber++; // Game sequence number
+  gPlyN = {};
 
   var rSAObj = generateRSAkeys();
   var rings = generateRings();
-  var players = [];
+  var players = new Map();
 
   gGame = {
     rSAObj,
@@ -119,15 +110,64 @@ function generateRSAkeys(){
 
 // Creates a list of puzzles representing each ring
 function generateRings(ringCount){
+  var rings = [];
+  for(var i = 0; i < ringCount; i++){
+    //Generate the answer
+    ans = {};
+    //Add a puzzle
+    var puzzle = puzzleFactory.getNormalPuzzle();
+    rings.push(puzzle.getPrompt(ans));
+    gSolutions[i] = ans;
+  }
+}
+
+// Returns an object containing the three words that are a puzzle's answer
+function puzzleAnswer(ringIndex){
+
+}
+
+//Checks that a given answer is equal to the correct.  Advances the user if so.
+function checkAnswer(uid, ans){
+  var ringNum = gGame.players.get(uid).ring;
+  //TODO: need a break
+}
+
+//Maps up to three digits to a word
+function numToWord(num){
+  return "placeholder";
+}
+
+//Adds a player to the current game.
+//Returns false if player name already exists
+function addPlayer(name){
+  if(gPlyN[name]) return false;
+
+  var ply = {};
+
+  var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
+  num = num.substring(num.length - 5);
+  var uid = name + num;
+
+  ply.uid = uid;
+  ply.ring = 0;
+  ply.name = name;
+
+  if (uidMap.has(uid)) {
+      return false;
+  } else {
+      uidMap.set(uid, ply);
+      gPlyN[name] = true;
+      return true;
+  }
 
 }
 
 
-function getUsername(uid, uidMap) {
-  if (uidMap.has(uid)) {
-      return uidMap.get(uid);
-  }
-  return "This uid does not exist.";
+function getUsername(uid) {
+    if (uidMap.has(uid)) {
+        return uidMap.get(uid);
+    }
+    return "This uid does not exist.";
 }
 
 function isPrime(n) {

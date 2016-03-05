@@ -1,4 +1,4 @@
-exports.getPrompt = function(w1, w2, w3){
+exports.getPrompt = function(ws){
   console.log('TODO');
-  return('TODO: ' + w1);
+  return('TODO: ' + ws);
 }
