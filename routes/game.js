@@ -51,12 +51,18 @@ exports.proposeSolution = function(req, res) {
 
 };
 
+var uidMap = new Map();
+
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-function createUid(name) {
-	var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
-	num = num.substring(num.length - 5);
-	var uid = name + num;
-	return uid;
+function addUid(name, uidMap) {
+    var num = "0000" + (Math.floor(Math.random() * 100000)).toString();
+    num = num.substring(num.length - 5);
+    var uid = name + num;
+    if (uidMap.has(uid)) {
+        addUid(name, uidMap);
+    } else {
+        uidMap.set(uid, name);
+    }
 }
 
 // Starts next round of game
@@ -72,7 +78,7 @@ function newGame(ringCount) {
     rSAObj,
     rings,
     players,
-    
+
   };
 }
 
@@ -84,4 +90,12 @@ function generateRSA(){
 // Creates a list of puzzles representing each ring
 function generateRings(ringCount){
 
+}
+
+
+function getUsername(uid, uidMap) {
+    if (uidMap.has(uid)) {
+        return uidMap.get(uid);
+    }
+    return "This uid does not exist.";
 }
