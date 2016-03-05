@@ -13,6 +13,7 @@ var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
 var gGame = {};
 var gPlyN = {}; //All player names
+var gSolutions [];
 
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
@@ -86,7 +87,19 @@ function generateRings(ringCount){
     //Add a puzzle
     var puzzle = puzzleFactory.getNormalPuzzle();
     rings.push(puzzle.getPrompt(ans));
+    gSolutions[i] = ans;
   }
+}
+
+// Returns an object containing the three words that are a puzzle's answer
+function puzzleAnswer(ringIndex){
+
+}
+
+//Checks that a given answer is equal to the correct.  Advances the user if so.
+function checkAnswer(uid, ans){
+  var ringNum = gGame.players.get(uid).ring;
+  //TODO: need a break
 }
 
 //Maps up to three digits to a word
