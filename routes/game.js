@@ -11,9 +11,12 @@ var puzzleFactory = require('./puzzleModules/puzzleFactory');
 //TODO since some of these could end up in DB.  Feel free to put stuff here though
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
+var gRingNumber = 2; //Number of normal rings
 var gGame = {};
 var gPlyN = {}; //All player names
 var gSolutions = [];
+var gStatus = [];
+var gOutputMap = []; // stores memoized map
 
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
@@ -21,19 +24,33 @@ exports.getPuzzleInfo = function(req, res) {
     var uid = Number( req.params.uid );
     var n = Number( req.params.n );
 
-
+    //check user has credentials to view that prompt
+    if (gGame.players.get(uid).ring >= n) {
+      //send the prompt
+      if( n >= 0){
+        res.send(gGame.rings[n]);
+      }
+    } else {
+      //Invalid credentials
+      console.log(uid + ' tried to access restricted puzzle info');
+    }
 };
 
 exports.getMapInfo = function(req, res) {
 
     var uid = Number( req.params.uid );
-
+    //Map info isn't user specific for now.
+    res.send(gOutputMap);
 
 };
 
 exports.getGameStatus = function(req, res) {
 
     var uid = Number( req.params.uid );
+    var n = Number( req.params.n );
+
+    //game status is uid independent
+    res.send(gStatus[n]);
 
 
 };
@@ -42,16 +59,22 @@ exports.join = function(req, res) {
 
     var name = Number( req.params.uid );
 
+    res.send(addPlayer(name));
 
 };
 
 exports.proposeSolution = function(req, res) {
 
     var uid = Number( req.params.uid );
-    var solution = Number( req.params.n );
+    var solution = req.params.n;
 
+    checkAnswer(uid,solution);
 
 };
+
+exports.getActiveGame = function(req, res){
+  res.send(gGameNumber);
+}
 
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -60,6 +83,7 @@ function newGame(ringCount) {
   gMapNumber = 0; // Update sequence number of map
   gGameNumber++; // Game sequence number
   gPlyN = {};
+  gOutputMap = [];
 
   var rSAObj = generateRSAkeys();
   var rings = generateRings();
@@ -148,9 +172,22 @@ function advanceUser(uid){
   var ringNum = gGame.players.get(uid).ring;
   if (ringNum < gSolutions.length + 1){
     gGame.players.get(uid).ring++;
+    incrementMap();
   } else {
     //looks like they won. WOOHOO
-    //TODO What do we do when someone wins?
+    gStatus[gGameNumber] = {
+      winner : gGame.players.get(uid).name
+    }
+    newGame(gRingNumber);
+  }
+}
+
+// Generates an array of name,ring pairs for data output, stores it to avoid recomp
+function incrementMap(){
+  gMapNumber++;
+  gOutputMap = [];
+  for(var i = 0; i < gGame.players.length; i++){
+    gOutputMap.push({name:gGame.players[i].name,ring:gGame.players[i].ring, });
   }
 }
 
@@ -160,9 +197,9 @@ function numToWord(num){
 }
 
 //Adds a player to the current game.
-//Returns false if player name already exists
+//Returns the unique name for the player for 'private' communication
 function addPlayer(name){
-  if(gPlyN[name]) return false;
+  if(gPlyN[name]) return null;
 
   var ply = {};
 
@@ -175,11 +212,11 @@ function addPlayer(name){
   ply.name = name;
 
   if (uidMap.has(uid)) {
-      return false;
+      return null;
   } else {
       uidMap.set(uid, ply);
       gPlyN[name] = true;
-      return true;
+      return uid;
   }
 
 }
