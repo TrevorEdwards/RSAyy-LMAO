@@ -96,10 +96,21 @@ function puzzleAnswer(ringIndex){
 
 }
 
-//Checks that a given answer is equal to the correct.  Advances the user if so.
+//Checks that a given answer is equal to the correct.  Advances the user if so and returns true.
 function checkAnswer(uid, ans){
   var ringNum = gGame.players.get(uid).ring;
-  //TODO: need a break
+  for (var i = 0; i < gSolutions[ringNum].length; i++){
+    if (gSolutions[ringNum][i] != ans[i]){
+      return false;
+    }
+  }
+  advanceUser(uid);
+  return(true);
+}
+
+// Advances the user in the game
+function advanceUser(uid){
+
 }
 
 //Maps up to three digits to a word
