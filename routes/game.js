@@ -12,7 +12,7 @@ var bigInt = require('big-integer');
 //TODO since some of these could end up in DB.  Feel free to put stuff here though
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
-var gRingNumber = 2; //Number of normal rings
+var gRingNumber = 4; //Number of normal rings
 var gGame = {};
 var gPlyN = {}; //All player names
 var gSolutions = [];
@@ -125,7 +125,7 @@ function numToString(num){
     var cut = Number(num[i] + num[i+1]);
     outstr = outstr + String.fromCharCode(cut+65);
   }
-  //TODO lol
+  return outstr;
 }
 
 // Starts next round of game
