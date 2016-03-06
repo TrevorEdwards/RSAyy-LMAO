@@ -165,6 +165,7 @@ function newGame(ringCount) {
       value.ring = 0;
     });
   }
+  incrementMap();
   //encrypt final answer
 
 
