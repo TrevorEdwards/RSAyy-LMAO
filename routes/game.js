@@ -149,6 +149,7 @@ function newGame(ringCount) {
   gSolutions = [];
   var w1 = randomWordIndex();
   gFinalPuzzleAnswer = [gWords[w1]];
+  console.log(w1);
 
   gRSAObj = generateRSAkeys();
   var unencrypted = w1;
