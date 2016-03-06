@@ -165,7 +165,6 @@ function newGame(ringCount) {
       value.ring = 0;
     });
   }
-  incrementMap();
   //encrypt final answer
 
 
@@ -175,6 +174,7 @@ function newGame(ringCount) {
     rings,
     players,
   };
+  incrementMap();
 }
 
 // Generates RSA, returning an object of p1, p2, n (?)
@@ -291,7 +291,6 @@ function advanceUser(uid){
 function incrementMap(){
   gMapNumber++;
   gOutputMap = [];
-  console.log(gGame.players.size);
   var i = 0;
   gGame.players.forEach(function(value,key){
     gOutputMap.push({name:value.name,ring:value.ring, });
