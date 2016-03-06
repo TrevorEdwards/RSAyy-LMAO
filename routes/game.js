@@ -55,6 +55,8 @@ exports.getGameStatus = function(req, res) {
     var n = Number( req.params.n );
 
     //game status is uid independent
+    var ret = gStatus[n];
+    if (ret == null) ret = {};
     res.send(gStatus[n]);
 
 
@@ -118,6 +120,7 @@ function newGame(ringCount) {
   gGameNumber++; // Game sequence number
   gPlyN = {};
   gOutputMap = [];
+  gSolutions = [];
   var w1 = randomWordIndex();
   var w2 = randomWordIndex();
   var w3 = randomWordIndex();
