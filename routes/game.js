@@ -105,7 +105,7 @@ exports.easyRSA = function(req, res){
   var p = req.params.p;
   var q = req.params.q;
 
-  res.send({ data : easyRSA(msg, key,p,q)});
+  res.send({ data : easyRSA(msg, p,q, key)});
 
 }
 
@@ -149,13 +149,13 @@ function newGame(ringCount) {
   gSolutions = [];
   var w1 = randomWordIndex();
   gFinalPuzzleAnswer = [gWords[w1]];
-  console.log(w1);
 
   gRSAObj = generateRSAkeys();
   var unencrypted = w1;
   gFinalEncr = toggleEncrypt(unencrypted, gRSAObj.pubkey, gRSAObj.p, gRSAObj.q);
   var rings = generateRings(ringCount);
   var players = new Map();
+
   //encrypt final answer
 
 
