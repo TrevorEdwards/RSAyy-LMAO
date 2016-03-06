@@ -66,7 +66,7 @@ exports.join = function(req, res) {
 
     var name =  req.params.name;
 
-    res.send({addPlayer(name)});
+    res.send({uid:addPlayer(name)});
 
 };
 
@@ -316,4 +316,9 @@ function leastFactor(n){
 
 function toggleEncrypt(n, key, p, q) {
   return bigInt(n).modPow(key, p*q).toJSNumber();
+}
+
+function easyRSA(n, key, p, q) {
+  var msg = toggleEncrypt(n,key,p,q);
+  return [numToWord(Math.floor(msg/1000000)%1000), numToWord(Math.floor(msg/1000)%1000), numToWord(msg%1000)];
 }
