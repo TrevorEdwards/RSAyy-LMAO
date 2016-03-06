@@ -80,10 +80,10 @@ exports.join = function(req, res) {
 exports.proposeSolution = function(req, res) {
 
     var uid = req.params.uid;
-    var solution = req.params.n;
-    var correct = checkAnswer(uid,solution);
+    var solution = req.params.solution;
+    var correct = checkAnswer(uid,solution.trim().split(' '));
     var bonus = (correct? puzzleAnswer(uid.ring) : 'noop');
-    res.send({correct:checkAnswer(uid,solution.trim().split(' ')), bonus:bonus});
+    res.send({correct});
 
 };
 
