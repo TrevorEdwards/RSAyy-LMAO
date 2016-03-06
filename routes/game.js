@@ -55,9 +55,9 @@ exports.getGameStatus = function(req, res) {
     var gid = Number( req.params.n );
 
     //game status is uid independent
-    var ret = gStatus[n];
-    if (ret == null)   res.send(gMapNumber);
-    else   res.send(gStatus[n]);
+    var ret = gStatus[gid];
+    if (ret == null)   res.send({gMapNumber});
+    else   res.send(ret);
 
 
 };
