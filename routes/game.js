@@ -66,7 +66,7 @@ exports.join = function(req, res) {
 
     var name =  req.params.name;
 
-    res.send(addPlayer(name));
+    res.send({addPlayer(name)});
 
 };
 
