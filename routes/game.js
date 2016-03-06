@@ -301,7 +301,7 @@ function incrementMap(){
 
 //Maps up to three digits to a word
 function numToWord(num){
-  return gWords[num];
+  return gWords[num%gWords.length];
 }
 
 //Adds a player to the current game.
