@@ -98,7 +98,7 @@ exports.trashTalk = function(req, res){
 }
 
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-newGame();
+newGame(gRingNumber);
 
 function randomWordIndex(){
   return Math.floor(Math.random() * gWords.length);
