@@ -1,6 +1,6 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
+<!doctype html>
+<html lang="en">
+<head>
 	<meta charset="UTF-8" />
 	<title>Testing Things</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
@@ -15,119 +15,7 @@
 </head>
 <body>
 
-<script type="text/javascript">
-
-var game = new Phaser.Game(1024, 800, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
-
-function preload() {
-	//game.load.spritesheet('background', 'assets/BackgroundTest.png', 800, 600);
-	//game.load.image('background', 'assets/BackgroundTest.png');
-	//game.load.image('background', 'assets/background.png');
-}
-
-//var = background;
-var cursors;
-var testtext;
-var shell;
-var draw_shell;
-var in_shell = [];
-var mid_shell = [];
-var out_shell = new Array(10);
-
-function create() {
-
-	game.add.sprite(0, 0, 'background');
-
-	testtext = game.add.text(16, 16, 'Test', { fontSize: '32px', fill: '#000' });
-
-	cursors = game.input.keyboard.createCursorKeys();
-
-	shells = game.add.group();
-	//var out_shell = shell.
-
-	//Creates circles for levels
-	//var in_shell = new Phaser.Circle(game.world.centerX,game.world.centerY,100);
-	//var mid_shell = new Phaser.Circle(game.world.centerX,game.world.centerY,200);
-	//var out_shell = new Phaser.Circle(game.world.centerX,game.world.centerY,300);
-
-	//var in_shell = [];
-	//var mid_shell = [];
-	//var out_shell = new Array(10);
-
-	//Allows points to be drawn
-	bmap = game.add.bitmapData(game.width, game.height);
-    //bmap.addToWorld();
-
-    //Draws circles for levels
-	draw_shell = game.add.graphics(0, 0);
-	draw_shell.lineStyle(1, 0x00ff00, 1);
-
-	draw_shell.drawCircle(game.world.centerX,game.world.centerY*.75,75);
-	draw_shell.drawCircle(game.world.centerX,game.world.centerY*.75,150);
-	draw_shell.drawCircle(game.world.centerX,game.world.centerY*.75,225);
-
-	//Populate outer shell
-
-	/*for (i=0;i<=10;i++){
-		out_shell.push();
-	}*/
-
-	var angle_divisions = (360/out_shell.length)*(Math.PI/180);
-	var x_pos = game.world.centerX+75;
-	var y_pos = game.world.centerY+75;
-	var current_angle = 0;
-
-	//for(point in out_shell){
-	for (i=0;i<out_shell.length;i++){
-		point = new Phaser.Point(game.world.centerX+(255*Math.cos(current_angle)), game.world.centerY+(255*Math.sin(current_angle)));
-		out_shell[i] = point;
-		current_angle += angle_divisions;
-		//draw_shell.point();
-	}
-}
-
-function update() {
-	if (cursors.left.isDown){
-		testtext.text = 'You pressed left';
-	}
-	else if (cursors.right.isDown){
-		testtext.text = 'You pressed right';
-	}
-	else{
-        testtext.text = 'Nothing...';
-    }
-
-    for(i=0;i<out_shell.length;i++){
-    	point = out_shell[i];
-    	//console.log(point);
-    	//console.log("Hi)");
-    	game.context.fillStyle = 'rgb(255,255,0)';
-    	game.context.fillRect(point.x, point.y, 50, 50);
-    }
-
-    //Create group of points for each circle
-
-    //--Populate outer shell--
-    //Get size of outer shell group
-    //Calc angle divisions
-    //For each point in shell
-    ////Adjust coordinates of point
-
-    //Change Point's Shell Location
-    //Get current position/parent
-    //Move point based on current group
-    //If point moving past last shell
-    ////End game 
-
-
-
-}
-
-function changePosition(){
-
-}
-
-</script>
+<script type="text/javascript" src="js/game.js"></script>
 
 <footer>Text</footer>
 
