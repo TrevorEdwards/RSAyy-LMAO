@@ -21,7 +21,6 @@ function httpGetAsync(theUrl, callback)
 var safeToQuery;
 //Queries the server every second
 function update(){
-  console.log('updating');
   if(safeToQuery){
     safeToQuery = false;
     httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
@@ -43,7 +42,6 @@ function update(){
 update();
 
 function updateMap(){
-  console.log('updating map');
   httpGetAsync(baseurl + "/mapInfo/"+uid, function(response){
     var resp = JSON.parse(response);
     for(var i=0; i<resp.length;i++){

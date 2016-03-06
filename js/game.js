@@ -46,7 +46,6 @@ function renderAll(){
 	});
 	//Now we have the number of points per level, time to render
 	for(i=0;i<levels.length;i++){
-		console.log('trap queen')
 			renderN(levels[i],game.world.centerX,game.world.centerY, largestRadius / (i+1) );
 	}
 }
