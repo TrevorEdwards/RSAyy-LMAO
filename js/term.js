@@ -129,7 +129,7 @@ jQuery(function($, undefined) {
     if (command !== '') {
       command = command.trim();
 
-      var firstWord = "NA";
+      var firstWord = command;
       var firstBound = command.indexOf(" ");
       if(firstBound != -1){
         firstWord = command.substring(0,firstBound);
@@ -144,12 +144,11 @@ jQuery(function($, undefined) {
       }
       else{
         var rest = command.substr(firstWord.length + 1);
-
         switch(firstWord){
           case "help": term.echo("Type in the answer to the problem to proceed.");
           break;
 
-          case "puzzle": term.echo(getPuzzleInfo(term,ring));
+          case "puzzle": getPuzzleInfo(term,ring);
           break;
 
           case "solve":
