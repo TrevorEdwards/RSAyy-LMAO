@@ -6,6 +6,9 @@ var timerid = null;
 var gid = 0;
 var mid = 0;
 var safeToQuery = true;
+var lastTrash = "";
+
+
 
 function httpGetAsync(theUrl, callback)
 {
@@ -25,6 +28,11 @@ function update(){
     safeToQuery = false;
     httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
       var resp = JSON.parse(response);
+      //TRASH TALK @#(*$&@#*($))
+      if(resp.trash != lastTrash){
+          lastTrash = resp.trash;
+        	responsiveVoice.speak(lastTrash);
+      }
       if (resp.winner){
         //SOMEONE WON WOW
         console.log('wow someone won');
@@ -49,6 +57,12 @@ function updateMap(){
       //assuming this is lauren's thing
       updatePlayer(resp[i].name, resp[i].ring);
     }
+  });
+}
+
+function trashTalk(msg){
+  httpGetAsync(baseurl + "/trashTalk/"+msg, function(response){
+
   });
 }
 
@@ -79,6 +93,15 @@ jQuery(function($, undefined) {
 
     if (command !== '') {
       command = command.trim();
+
+      var firstWord = "NA";
+      var firstBound = command.indexOf(" ");
+      if(firstBound != -1){
+        firstWord = command.substring(0,firstBound);
+      }
+      if(firstWord == "trash"){
+        trashTalk(command.substring(firstBound,command.length));
+      }
 
       if(gamestate == 0){
         joinGame(command);
