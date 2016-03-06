@@ -142,10 +142,10 @@ function numToString(num){
 
 // Starts next round of game
 function newGame(ringCount) {
+  var oldPlys = gGame.players;
   gMapNumber = 0; // Update sequence number of map
   gGameNumber++; // Game sequence number
   gGame = {};
-  gPlyN = {};
   gOutputMap = [];
   gSolutions = [];
   gFinalPuzzleAnswer = [];
@@ -156,7 +156,15 @@ function newGame(ringCount) {
   var unencrypted = w1;
   gFinalEncr = toggleEncrypt(unencrypted, gRSAObj.pubkey, gRSAObj.p, gRSAObj.q);
   var rings = generateRings(ringCount);
-  var players = new Map();
+  var players;
+  if(oldPlys == undefined){
+    players = new Map();
+  } else {
+    players = oldPlys;
+    players.forEach(function(value,key){
+      value.ring = 0;
+    });
+  }
   //encrypt final answer
 
 
