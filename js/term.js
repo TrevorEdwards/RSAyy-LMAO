@@ -30,7 +30,7 @@ function update(term){
       var resp = JSON.parse(response);
       //TRASH TALK @#(*$&@#*($))
       console.log(resp.msg);
-      if(resp.msg != lastTrash && resp.msp != undefined){
+      if(resp.msg != lastTrash && resp.msg != undefined){
         lastTrash = resp.msg;
         responsiveVoice.speak(lastTrash);
       }
