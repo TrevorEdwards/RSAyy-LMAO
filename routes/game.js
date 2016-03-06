@@ -53,8 +53,8 @@ exports.getMapInfo = function(req, res) {
 
 exports.getGameStatus = function(req, res) {
 
-    var mid = Number (req.params.uid );
-    var gid = Number( req.params.n );
+    var mid = Number (req.params.mid );
+    var gid = Number( req.params.gid );
 
     //game status is uid independent
     var ret = gStatus[gid];
