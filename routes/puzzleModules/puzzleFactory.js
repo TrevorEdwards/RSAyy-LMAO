@@ -5,6 +5,7 @@ a three word solution, and the puzzle must create a prompt around that.
 var caesar = require('./caesar');
 var anagram = require('./anagram');
 var final = require('./final');
+var morse = require('morse');
 
 const normalPuzzles = {
   caesar
