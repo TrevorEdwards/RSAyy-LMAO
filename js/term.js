@@ -34,8 +34,8 @@ function update(term){
         responsiveVoice.speak(lastTrash);
       }
       if (resp.winner){
-        //SOMEONE WON WOW
-        term.echo('wow someone won');
+        alert(resp.winner + ' has won the round!');
+        getActiveGame();
       } else {
         if(mid < resp.gMapNumber){
           //we're out of date
@@ -94,7 +94,7 @@ function joinGame(term,name){
   var frag = '/joingame/'
   var url = baseurl.concat(frag).concat(name);
   httpGetAsync(url,function(callback){
-    if(callback == ""){
+    if(JSON.parse(callback).uid == null){
       term.echo("That name is already taken. Choose another.")
     }
     else{
