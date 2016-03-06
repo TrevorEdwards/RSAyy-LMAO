@@ -69,6 +69,15 @@ function randomColor(){
 	return rand;
 }
 
+function createCircles(){
+	draw_shell.destroy();
+	draw_shell = game.add.graphics(0, 0);
+	for(var i=1; i<=circleCount; i++){
+		draw_shell.lineStyle(1, randomColor(), 1);
+		draw_shell.drawCircle(game.world.centerX,game.world.centerY, largestRadius / i);
+	}
+}
+
 function create() {
 
 	//testtext = game.add.text(16, 16, 'Test', { fontSize: '32px', fill: '#000' });
@@ -85,10 +94,7 @@ function create() {
 	draw_shell = game.add.graphics(0, 0);
 	draw_shell.lineStyle(1, 0xff0000, 1);
 
-	for(var i=1; i<=circleCount; i++){
-		draw_shell.lineStyle(1, randomColor(), 1);
-		draw_shell.drawCircle(game.world.centerX,game.world.centerY, largestRadius / i);
-	}
+	createCircles();
 
 	//center it
 	game.stage.scale.pageAlignHorizontally = true;

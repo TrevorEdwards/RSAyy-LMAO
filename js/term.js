@@ -85,6 +85,8 @@ function getActiveGame(term){
   httpGetAsync(baseurl+ '/activegame', function(response){
     var obj = JSON.parse(response);
     gid = response.gameId;
+    circleCount = response.circleCount;
+    createCircles();
   });
 }
 
