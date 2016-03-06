@@ -25,6 +25,7 @@ function createIndex(req, res){
    app.get('/solution/:uid/:solution', game.proposeSolution); //User wants to propose a solution for its current puzzle
    app.get('/activeGame', game.getActiveGame); //User wants to propose a solution for its current puzzle
    app.get('/trashTalk/:msg', game.trashTalk); //User wants to propose a solution for its current puzzle
+   app.get('/easyRSA/:msg/:key/:p/:q', game.easyRSA); //User wants to propose a solution for its current puzzle
 
 http.createServer(app).listen(app.get('port') ,app.get('ip'), function () {
     console.log("RSALmao server listening at %s:%d ", app.get('ip'),app.get('port'));

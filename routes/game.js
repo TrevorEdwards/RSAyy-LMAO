@@ -22,6 +22,7 @@ var gWords = [   "Word",   "a",   "abandon",   "ability",   "able
 var gFinalPuzzleAnswer = [];
 var gFinalEncr;
 var gTrashMessage;
+var gRSAObj;
 
 
 //EXPORTS~~~~~~~~~~~~~~
@@ -97,6 +98,17 @@ exports.trashTalk = function(req, res){
 
 }
 
+exports.easyRSA = function(req, res){
+
+  var msg = req.params.msg;
+  var key = req.params.key;
+  var p = req.params.p;
+  var q = req.params.q;
+
+  res.send({ data : easyRSA(msg, key,p,q)});
+
+}
+
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 newGame(gRingNumber);
 
@@ -138,9 +150,9 @@ function newGame(ringCount) {
   var w1 = randomWordIndex();
   gFinalPuzzleAnswer = [gWords[w1]];
 
-  var rSAObj = generateRSAkeys();
+  gRSAObj = generateRSAkeys();
   var unencrypted = w1;
-  gFinalEncr = toggleEncrypt(unencrypted, rSAObj.pubkey, rSAObj.p, rSAObj.q);
+  gFinalEncr = toggleEncrypt(unencrypted, gRSAObj.pubkey, gRSAObj.p, gRSAObj.q);
   var rings = generateRings(ringCount);
   var players = new Map();
   //encrypt final answer
@@ -148,7 +160,7 @@ function newGame(ringCount) {
 
 
   gGame = {
-    rSAObj,
+    gRSAObj,
     rings,
     players,
   };
@@ -204,7 +216,7 @@ function generateRings(ringCount){
   //Last ring
   var final = puzzleFactory.getFinalPuzzle();
   rings
-    .push(final.getPrompt(gFinalEncr));
+    .push(final.getPrompt(gFinalEncr, gRSAObj.p, gRSAObj.q, gRSAObj.privkey));
     gSolutions[ringCount] = gFinalPuzzleAnswer;
 
   return rings;
@@ -221,13 +233,13 @@ function puzzleAnswer(i){
 function suppPuzzleAnswer(ringIndex){
   switch(gRingNumber - ringIndex) {
     case 2:
-      return gGame.rSAObj.p;
+      return gRSAObj.p;
       break;
     case 1:
-      return gGame.rSAObj.q;
+      return gRSAObj.q;
       break;
     case 0:
-      return gGame.rSAObj.privkey;
+      return gRSAObj.privkey;
       break;
     default:
       return;
@@ -339,5 +351,5 @@ function toggleEncrypt(n, key, p, q) {
 
 function easyRSA(n, key, p, q) {
   var msg = toggleEncrypt(n,key,p,q);
-  return [numToWord(Math.floor(msg/1000000)%1000), numToWord(Math.floor(msg/1000)%1000), numToWord(msg%1000)];
+  return numToWord(msg%1000);
 }
