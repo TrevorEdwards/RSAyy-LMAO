@@ -110,8 +110,9 @@ function joinGame(term,name){
   }
 )}
 
-function easyRSA(term){
-  httpGetAsync(baseurl + "/easyrsa/"+term, function(response){
+function easyRSA(term,args){
+  if(args.length != 4 ) return;
+  httpGetAsync(baseurl + "/easyrsa/"+args[0]+"/"+args[1]+"/"+args[2]+"/"+args[3], function(response){
     var resp = JSON.parse(response);
     term.echo(resp.data);
   });
@@ -163,7 +164,7 @@ jQuery(function($, undefined) {
           });
           break;
 
-          case "easyrsa": easyRSA(rest);
+          case "rsayylmao": easyRSA(term, rest.split(' '));
           break;
 
           default: term.echo("Unknown Command");
@@ -180,7 +181,7 @@ jQuery(function($, undefined) {
 			'solve',
 			'trash',
 			'puzzle',
-      'easyrsa',
+      'rsayylmao',
 		],
     outputLimit: 6,
     greetings: function(callback){
