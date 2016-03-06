@@ -150,7 +150,7 @@ jQuery(function($, undefined) {
       else{
         var rest = command.substr(firstWord.length + 1);
         switch(firstWord){
-          case "help": term.echo("Type in the answer to the problem to proceed.");
+          case "help": term.echo("Provide the answer to the problem to proceed. Type puzzle to display the puzzle again. Type solve with your answer to attempt to solve the puzzle.");
           break;
 
           case "puzzle": getPuzzleInfo(term,ring);
