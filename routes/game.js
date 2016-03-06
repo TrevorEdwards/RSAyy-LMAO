@@ -25,7 +25,7 @@ var gWords = ["the","of","to","and","a","in","is","it","you","that","he","was","
 //EXPORTS~~~~~~~~~~~~~~
 exports.getPuzzleInfo = function(req, res) {
 
-    var uid = Number( req.params.uid );
+    var uid = req.params.uid;
     var n = Number( req.params.n );
 
     //check user has credentials to view that prompt
@@ -42,7 +42,7 @@ exports.getPuzzleInfo = function(req, res) {
 
 exports.getMapInfo = function(req, res) {
 
-    var uid = Number( req.params.uid );
+    var uid =  req.params.uid ;
     //Map info isn't user specific for now.
     res.send(gOutputMap);
 
@@ -50,7 +50,7 @@ exports.getMapInfo = function(req, res) {
 
 exports.getGameStatus = function(req, res) {
 
-    var uid = Number( req.params.uid );
+    var uid = req.params.uid;
     var n = Number( req.params.n );
 
     //game status is uid independent
@@ -61,7 +61,7 @@ exports.getGameStatus = function(req, res) {
 
 exports.join = function(req, res) {
 
-    var name = Number( req.params.uid );
+    var name =  req.params.name;
 
     res.send(addPlayer(name));
 
@@ -69,7 +69,7 @@ exports.join = function(req, res) {
 
 exports.proposeSolution = function(req, res) {
 
-    var uid = Number( req.params.uid );
+    var uid = req.params.uid;
     var solution = req.params.n;
 
     checkAnswer(uid,solution);
@@ -81,9 +81,34 @@ exports.getActiveGame = function(req, res){
 }
 
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+newGame();
 
 function randomWord(){
   return gWords[Math.floor(Math.random() * gWords.length)];
+}
+
+//converts a string of all lowercase to a number-string
+function stringToNum(str){
+  var outstr = "";
+  for(var i = 0; i < str.length; i++){
+    var res = str.charCodeAt(i) - 'a'.charCodeAt(0);
+    res = "" + res;
+    if(res.length == 1){
+      res = "0" + res;
+    }
+    outstr += res;
+  }
+  return Number(outstr);
+}
+
+//converts a num-string to a string wow! NUM MUST BE EVEN LENGTH DOG
+function numToString(num){
+  var outstr = "";
+  for(i = 0; i<num.length;i = i + 2){
+    var cut = Number(num[i] + num[i+1]);
+    outstr = outstr + String.fromCharCode(cut+65);
+  }
+  //TODO lol
 }
 
 // Starts next round of game
@@ -105,8 +130,8 @@ function newGame(ringCount) {
   var rings = generateRings();
   var players = new Map();
   //encrypt final answer
-  var spaceFinal = gFinalPuzzleAnswer[0] + " " + gFinalPuzzleAnswer[1] + " " + gFinalPuzzleAnswer[2];
-  var finalEncr = toggleEncrypt(spaceFinal, rSAObj.pubkey, rSAObj.p, rSAObj.q);
+  var spaceFinal = gFinalPuzzleAnswer[0] + "" + gFinalPuzzleAnswer[1] + "" + gFinalPuzzleAnswer[2];
+  var finalEncr = toggleEncrypt(stringToNum(spaceFinal), rSAObj.pubkey, rSAObj.p, rSAObj.q);
 
 
   gGame = {
