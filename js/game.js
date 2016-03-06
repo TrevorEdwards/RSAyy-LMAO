@@ -141,7 +141,7 @@ function render() {
 	for(i=0;i<activePoints.length;i++){
 		point = activePoints[i];
 		game.context.fillStyle = point.color;
-		game.context.fillRect(point.x, point.y, 4, 4);
+		game.context.fillRect(point.x - pointRadius / 2, point.y - pointRadius/2, pointRadius, pointRadius);
 	}
 }
 
