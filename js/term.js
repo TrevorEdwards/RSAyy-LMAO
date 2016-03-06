@@ -82,10 +82,10 @@ function getPuzzleInfo(term, n){
 
 
 function getActiveGame(term){
-  httpGetAsync(baseurl+ '/activegame', function(response){
+  httpGetAsync(baseurl+ '/activeGame', function(response){
     var obj = JSON.parse(response);
-    gid = response.gameId;
-    circleCount = response.circleCount;
+    gid = obj.gameId;
+    circleCount = obj.circleCount + 1;
     createCircles();
   });
 }
