@@ -65,15 +65,28 @@ function trashTalk(msg){
   });
 }
 
+function moveOn(term){
+    ring++;
+    getPuzzleInfo(term,ring);
+    //win?
+}
+
 
 function getPuzzleInfo(term, n){
   httpGetAsync(baseurl + "/puzzleInfo/" + uid + '/' + n, function(response){
     var obj = JSON.parse(response);
     puzzles[n] =  obj.prompt;
     term.echo("Puzzle "+n+ " is: " + puzzles[n]);
-  })};
+  });
+}
 
 
+function getActiveGame(term){
+    httpGetAsync(baseurl+ '/activegame', function(respone){
+	var obj = JSON.parse(response);
+	gid = response.gameId;
+    });
+}
 
   function joinGame(term,name){
     var frag = '/joingame/'
@@ -88,6 +101,7 @@ function getPuzzleInfo(term, n){
         uid = obj.uid;
         gamestate = 1;
         ring = 0;
+	  getActiveGame(term);
         update(term);
       }
     }
@@ -121,6 +135,9 @@ function getPuzzleInfo(term, n){
           switch(first){
             case help: term.echo("Type in the answer to the problem to proceed");
             break;
+	      
+	  case puzzle: term.echo(puzzle[ring]);
+	      break;
 
             case solve:
             var frag = '/solution/';
@@ -134,7 +151,7 @@ function getPuzzleInfo(term, n){
               else{
                 term.echo("Wrong answer, try again");
               }
-            })
+            });
             break;
             case repeat:
 
