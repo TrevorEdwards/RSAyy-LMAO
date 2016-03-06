@@ -26,10 +26,8 @@ var playerData = new Map(); //Maps player names to their rings.. not really usef
 // Update a player with its ring
 function updatePlayer(name, ring){
 	var ply = playerData.get(name);
-	if( !( ply && ply == ring )){
-		playerData.set(name,ring);
-		renderAll();
-	}
+	playerData.set(name,ring);
+	renderAll();
 }
 
 // Renders all players into circles
@@ -48,6 +46,7 @@ function renderAll(){
 	});
 	//Now we have the number of points per level, time to render
 	for(i=0;i<levels.length;i++){
+		console.log('trap queen')
 			renderN(levels[i],game.world.centerX,game.world.centerY, largestRadius / (i+1) );
 	}
 }
@@ -81,12 +80,7 @@ function create() {
 		draw_shell.drawCircle(game.world.centerX,game.world.centerY, largestRadius / i);
 	}
 
-	//TEST data
-	updatePlayer('Trevor',2);
-	updatePlayer('Lauren',2);
-	updatePlayer('Jerry',1);
-	updatePlayer('Henry',0);
-	//END OF TEST DATA
+
 
 
 
@@ -94,7 +88,6 @@ function create() {
 
 //Renders N points around point X,Y with radius R
 function renderN(n,x,y,r){
-
 	if( n == 0 ) return;
 
 	var angle_divisions = (360/n)*(Math.PI/180);

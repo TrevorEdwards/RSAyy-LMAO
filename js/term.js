@@ -21,18 +21,39 @@ function httpGetAsync(theUrl, callback)
 var safeToQuery;
 //Queries the server every second
 function update(){
-
+  console.log('updating');
   if(safeToQuery){
     safeToQuery = false;
     httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
       var resp = JSON.parse(response);
-      console.log(resp);
+      if (resp.winner){
+        //SOMEONE WON WOW
+        console.log('wow someone won');
+      } else {
+        if(mid < resp.gMapNumber){
+          //we're out of date
+          updateMap();
+        }
+      }
     });
     safeToQuery = true;
   }
     timerid = setTimeout(function(){update()},1000);
 }//clearInterval(timerid) to stop updating.
 update();
+
+function updateMap(){
+  console.log('updating map');
+  httpGetAsync(baseurl + "/mapInfo/"+uid, function(response){
+    var resp = JSON.parse(response);
+    for(var i=0; i<resp.length;i++){
+      //Call lauren's thing
+      //assuming this is lauren's thing
+      updatePlayer(resp[i].name, resp[i].ring);
+    }
+  });
+}
+
 
 
 
@@ -49,8 +70,6 @@ function joinGame(name){
 	uid = obj.uid;
 	gamestate = 1;
 	ring = 0;
-
-      term.echo('Welcome');
     }
   }
 )}
