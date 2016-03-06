@@ -144,9 +144,11 @@ function numToString(num){
 function newGame(ringCount) {
   gMapNumber = 0; // Update sequence number of map
   gGameNumber++; // Game sequence number
+  gGame = {};
   gPlyN = {};
   gOutputMap = [];
   gSolutions = [];
+  gFinalPuzzleAnswer = [];
   var w1 = randomWordIndex();
   gFinalPuzzleAnswer = [gWords[w1]];
 
