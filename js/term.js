@@ -110,6 +110,13 @@ function joinGame(term,name){
   }
 )}
 
+function easyRSA(term){
+  httpGetAsync(baseurl + "/easyrsa/"+term, function(response){
+    var resp = JSON.parse(response);
+    term.echo(resp.data);
+  });
+}
+
 
 
 jQuery(function($, undefined) {
@@ -155,6 +162,10 @@ jQuery(function($, undefined) {
             }
           });
           break;
+
+          case "easyrsa": easyRSA(rest);
+          break;
+
           default: term.echo("Unknown Command");
           break;
 
@@ -169,6 +180,7 @@ jQuery(function($, undefined) {
 			'solve',
 			'trash',
 			'puzzle',
+      'easyrsa',
 		],
     outputLimit: 6,
     greetings: function(callback){
