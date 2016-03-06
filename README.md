@@ -1,5 +1,7 @@
 # RSAyy-LMAO
 
+[![forthebadge](http://forthebadge.com/images/badges/uses-html.svg)](http://forthebadge.com)
+
 RSAyy-LMAO is a hyper-competetive encryption MMO.
 
 Play [here](http://trevoredwards.github.io/RSAyy-LMAO/).
