@@ -103,7 +103,7 @@ function joinGame(term,name){
       term.echo("That name is already taken. Choose another.")
     }
     else{
-      term.echo("Welcome, " + name);
+      term.echo("Welcome, " + name + ". Type puzzle to display the puzzle again. Type solve with your answer to attempt to solve the puzzle.");
       var obj = JSON.parse(callback);
       uid = obj.uid;
       gamestate = 1;
