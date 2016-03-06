@@ -83,7 +83,7 @@ exports.proposeSolution = function(req, res) {
     var solution = req.params.n;
     var correct = checkAnswer(uid,solution);
     var bonus = (correct? puzzleAnswer(uid.ring) : 'noop');
-    res.send({correct:checkAnswer(uid,solution), bonus:bonus});
+    res.send({correct:checkAnswer(uid,solution.trim().split(' ')), bonus:bonus});
 
 };
 
@@ -196,7 +196,10 @@ function generateRings(ringCount){
   var rings = [];
   for(var i = 0; i < ringCount; i++){
     //Generate the answer
-    ans = puzzleAnswer(i);
+    var w1 = randomWordIndex();
+    var w2 = randomWordIndex();
+    var w3 = randomWordIndex();
+    ans = [gWords[w1],gWords[w2],gWords[w3]];
     //Add a puzzle
     var puzzle = puzzleFactory.getNormalPuzzle();
     rings.push(puzzle.getPrompt(ans));
@@ -213,7 +216,13 @@ function generateRings(ringCount){
 
 // Returns an object containing the three words that are a puzzle's answer
 // Uses the puzzle key
-function puzzleAnswer(ringIndex){
+function puzzleAnswer(i){
+  return gSolutions[i];
+}
+
+// Returns an object containing the three words that are a puzzle's answer
+// Uses the puzzle key
+function suppPuzzleAnswer(ringIndex){
   switch(gRingNumber - ringIndex) {
     case 2:
       return gGame.rSAObj.p;
