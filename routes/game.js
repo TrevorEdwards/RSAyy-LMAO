@@ -12,7 +12,7 @@ var bigInt = require('big-integer');
 //TODO since some of these could end up in DB.  Feel free to put stuff here though
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
-var gRingNumber = 1; //Number of normal rings
+var gRingNumber = 3; //Number of normal rings
 var gGame = {};
 var gPlyN = {}; //All player names
 var gSolutions = [];
@@ -301,7 +301,7 @@ function incrementMap(){
 
 //Maps up to three digits to a word
 function numToWord(num){
-  return gWords[num];
+  return gWords[num%gWords.length];
 }
 
 //Adds a player to the current game.
