@@ -155,7 +155,6 @@ function newGame(ringCount) {
   gFinalEncr = toggleEncrypt(unencrypted, gRSAObj.pubkey, gRSAObj.p, gRSAObj.q);
   var rings = generateRings(ringCount);
   var players = new Map();
-
   //encrypt final answer
 
 
@@ -355,5 +354,5 @@ function toggleEncrypt(n, key, p, q) {
 
 function easyRSA(n, p, q, key) {
   var msg = toggleEncrypt(n,key,p,q);
-  return numToWord(msg%1000);
+  return numToWord(msg);
 }
