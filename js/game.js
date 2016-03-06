@@ -21,17 +21,23 @@ var pointData = new Map(); //Maps player with a point
 var playerColors = new Map();
 var levelNames = [];
 var activeTexts = [];
+var rotAng = 0;
 
 
 // Update a player with its ring
 function updatePlayer(name, ring){
 	var ply = playerData.get(name);
-	var col = playerColors.get(name);
-	if( col == undefined){
-		playerColors.set(name,randomColorString());
+	if (ply != undefined){
+		movePoint(pointData.get(name),ring);
+		playerData.set(name, ring);
+	} else{
+		var col = playerColors.get(name);
+		if( col == undefined){
+			playerColors.set(name,randomColorString());
+		}
+		playerData.set(name,ring);
+		renderAll();
 	}
-	playerData.set(name,ring);
-	renderAll();
 }
 
 function randomColorString(){
@@ -112,19 +118,37 @@ function renderN(n,x,y,r,c){
 
 	for (i=0;i<n;i++){
 		var point = new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle)));
+			point.nx = x;
+			point.ny = y;
+			point.nr = r;
+			point.wr = r;
+			point.cang = current_angle;
 			point.color = playerColors.get(levelNames[c][i]);
+			pointData.set(levelNames[c][i], point);
 		activePoints.push(point);
 
-
-		activeTexts.push( game.add.text(point.x+25*Math.cos(current_angle) -25,point.y+25*Math.sin(current_angle) -25, levelNames[c][i], { fontSize: '8px', fill: playerColors.get(levelNames[c][i])  }));
+		var txt = game.add.text(point.x+25*Math.cos(current_angle) -25,point.y+25*Math.sin(current_angle) -25, levelNames[c][i], { fontSize: '8px', fill: playerColors.get(levelNames[c][i])  });
+		activeTexts.push( txt );
+		point.txt = txt;
 		current_angle += angle_divisions;
 	}
 
 }
 
 function update() {
+	rotAng = rotAng + .001;
+	rotAng = rotAng % 360;
 
-
+	for(var i = 0; i < activePoints.length; i++){
+		var pt = activePoints[i];
+		pt.x = pt.nx+(pt.nr*Math.cos(pt.cang + rotAng));
+		pt.y = pt.ny+(pt.nr*Math.sin(pt.cang + rotAng));
+		pt.txt.x = pt.x+25*Math.cos(pt.cang) -25;
+		pt.txt.y = pt.y+25*Math.sin(pt.cang) -25;
+		if (pt.wr < pt.nr){
+			pt.nr--;
+		}
+	}
     //Create group of points for each circle
 
     //--Populate outer shell--
@@ -150,18 +174,8 @@ function render() {
 }
 
 function movePoint(point, ring){
-	var angle = (point.x, ring.radius);
 	var radius = largestRadius/(ring+1);
-	var new_x = radius*cos(angle);
-	if (new_w == game.world.centerX){
-		console.log("Stop the game!");
-	}
-	else{
-		var diff = new_x - point.x;
-		for(i=1;i<=10;i++){
-			point.x += diff/10;
-		}
-	}
+	point.wr = radius;
 	//largestradius/ (ring+1)
 
 }
