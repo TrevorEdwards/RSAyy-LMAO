@@ -1,6 +1,7 @@
 // //Holds game state.  Make sure to use databases guys.
 //var mongodb = require('shareddb'),
 var puzzleFactory = require('./puzzleModules/puzzleFactory');
+var bigInt = require('big-integer');
 // app.get('/puzzleInfo/:uid/:n', game.getPuzzleInfo); //Get info of puzzle n for user uid
 // app.get('/mapInfo/:uid', game.getMapInfo); //Get map info for uid.  Sends a map id #
 // app.get('/gameStatus/:uid', game.getGameStatus); //Data on whether the game has ended, what the map identifier is for uid
@@ -255,3 +256,8 @@ function leastFactor(n){
   }
   return n;
 };
+
+function toggleEncrypt(n, key, p, q) {
+  return bigInt(n).modPow(key, p*q).toJSNumber();
+}
+
