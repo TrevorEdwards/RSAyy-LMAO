@@ -36,12 +36,34 @@ function updatePlayer(name, ring){
 			playerColors.set(name,randomColorString());
 		}
 		playerData.set(name,ring);
-		renderAll();
+		renderOne(name,ring);
 	}
 }
 
 function randomColorString(){
 	return '#'+Math.floor(Math.random()*16777215).toString(16);
+}
+
+function renderOne(name, ring){
+	var current_angle = Math.random() * 360;
+	var wr = largestRadius / (ring + 1);
+	var r = Math.random() * 500 + largestRadius;
+	var y = game.world.centerY;
+	var x = game.world.centerX;
+		var point = new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle)));
+			point.nx = x;
+			point.ny = y;
+			point.nr = r;
+			point.wr = r;
+			point.cang = current_angle;
+			point.color = playerColors.get(name);
+			pointData.set(name, point);
+		activePoints.push(point);
+
+		var txt = game.add.text(point.x+25*Math.cos(current_angle) -25,point.y+25*Math.sin(current_angle) -25, name, { fontSize: '8px', fill: playerColors.get(name)  });
+		activeTexts.push( txt );
+		point.txt = txt;
+
 }
 
 // Renders all players into circles
