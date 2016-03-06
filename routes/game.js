@@ -12,7 +12,7 @@ var bigInt = require('big-integer');
 //TODO since some of these could end up in DB.  Feel free to put stuff here though
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
-var gRingNumber = 4; //Number of normal rings
+var gRingNumber = 1; //Number of normal rings
 var gGame = {};
 var gPlyN = {}; //All player names
 var gSolutions = [];
@@ -252,6 +252,9 @@ function checkAnswer(uid, ans){
   var ringNum = gGame.players.get(uid).ring;
   for (var i = 0; i < gSolutions[ringNum].length; i++){
     if (gSolutions[ringNum][i] != ans[i]){
+      console.log('mismatch');
+      console.log(gSolutions[ringNum][i]);
+      console.log(ans[i]);
       return false;
     }
   }
