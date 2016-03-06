@@ -1,6 +1,8 @@
 var baseurl = "http://rsalmao.azurewebsites.net";
 var gamestate = 0;
 var uid = 0;
+var ring = 0;
+var timerid = null;
 
 function httpGetAsync(theUrl, callback)
 {
@@ -13,6 +15,14 @@ function httpGetAsync(theUrl, callback)
   xmlHttp.send(null);
 }
 
+function update(){
+    doStuff();
+    timerid = setTimeout(update(),1000);
+}//clearInterval(timerid) to stop updating.
+
+
+    
+    
 function joinGame(name){
   var frag = '/joingame/'
   var url = baseurl.concat(frag).concat(name);
@@ -21,9 +31,11 @@ function joinGame(name){
       term.echo("That name is already taken. Choose another.")
     }
     else{
-      var obj = JSON.parse(callback);
-      uid = obj.uid;
-      gamestate = 1;
+	var obj = JSON.parse(callback);
+	uid = obj.uid;
+	gamestate = 1;
+	ring = 0;
+	
       term.echo('Welcome');
     }
   }
