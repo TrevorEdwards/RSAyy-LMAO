@@ -6,7 +6,8 @@
   "dependencies": {
     "azure": "^0.10.6",
     "big-integer": "^1.6.12",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "morse": "^0.1.0"
   },
   "devDependencies": {},
   "scripts": {
