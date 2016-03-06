@@ -353,7 +353,7 @@ function toggleEncrypt(n, key, p, q) {
   return bigInt(n).modPow(key, p*q).toJSNumber();
 }
 
-function easyRSA(n, key, p, q) {
+function easyRSA(n, p, q, key) {
   var msg = toggleEncrypt(n,key,p,q);
   return numToWord(msg%1000);
 }
