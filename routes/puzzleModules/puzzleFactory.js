@@ -3,15 +3,16 @@ a three word solution, and the puzzle must create a prompt around that.
 **/
 
 var caesar = require('./caesar');
+var final = require('./final');
 
 const normalPuzzles = {
   caesar
 }
 
 exports.getNormalPuzzle = function(){
-  normalPuzzles.getRandom(); //TODO random array element?
+  return normalPuzzles[Math.floor(Math.random() * normalPuzzles.length)];
 }
 
 exports.getFinalPuzzle = function(){
-  //TODO
+  return final;
 }

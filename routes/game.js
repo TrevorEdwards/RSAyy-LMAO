@@ -82,22 +82,38 @@ exports.getActiveGame = function(req, res){
 
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+function randomWord(){
+  return gWords[Math.floor(Math.random() * gWords.length)];
+}
+
 // Starts next round of game
 function newGame(ringCount) {
   gMapNumber = 0; // Update sequence number of map
   gGameNumber++; // Game sequence number
   gPlyN = {};
   gOutputMap = [];
+  var w1 = randomWord();
+  var w2 = randomWord();
+  var w3 = randomWord();
+  gFinalPuzzleAnswer = {
+    w1,
+    w2,
+    w3,
+  };
 
   var rSAObj = generateRSAkeys();
   var rings = generateRings();
   var players = new Map();
+  //encrypt final answer
+  var spaceFinal = gFinalPuzzleAnswer[0] + " " + gFinalPuzzleAnswer[1] + " " + gFinalPuzzleAnswer[2];
+  var finalEncr = toggleEncrypt(spaceFinal, rSAObj.pubkey, rSAObj.p, rSAObj.q);
+
 
   gGame = {
     rSAObj,
     rings,
     players,
-
+    finalEncr,
   };
 }
 
@@ -150,7 +166,8 @@ function generateRings(ringCount){
   //Last ring
   var final = puzzleFactory.getFinalPuzzle();
   rings
-    .push(final.getPrompt(gFinalPuzzleAnswer)); //TODO: store final puzzle answer
+    .push(final.getPrompt(gGame.finalEncr));
+    gSolutions[ringCount] = gFinalPuzzleAnswer;
 }
 
 // Returns an object containing the three words that are a puzzle's answer
@@ -260,4 +277,3 @@ function leastFactor(n){
 function toggleEncrypt(n, key, p, q) {
   return bigInt(n).modPow(key, p*q).toJSNumber();
 }
-
