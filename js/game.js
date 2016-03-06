@@ -49,7 +49,6 @@ function renderAll(){
 	})
 	activePoints = [];
 	var levels = [];
-	console.log(circleCount);
 	for(var i = 0; i < circleCount; i++){
 		levels[i] = 0;
 		levelNames[i] = [];
@@ -94,7 +93,7 @@ function create() {
     //Draws circles for levels
 	draw_shell = game.add.graphics(0, 0);
 	draw_shell.lineStyle(1, 0xff0000, 1);
-	
+
 	//center it
 	game.stage.scale.pageAlignHorizontally = true;
 	game.stage.scale.pageAlignVeritcally = true;
