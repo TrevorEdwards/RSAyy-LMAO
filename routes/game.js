@@ -265,7 +265,7 @@ function checkAnswer(uid, ans){
 // Advances the user in the game
 function advanceUser(uid){
   var ringNum = gGame.players.get(uid).ring;
-  if (ringNum < gSolutions.length + 1){
+  if (ringNum < gSolutions.length){
     gGame.players.get(uid).ring++;
     incrementMap();
   } else {
