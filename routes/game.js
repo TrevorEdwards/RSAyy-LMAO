@@ -236,7 +236,10 @@ function suppPuzzleAnswer(ringIndex){
 
 //Checks that a given answer is equal to the correct.  Advances the user if so and returns true.
 function checkAnswer(uid, ans){
+  console.log('ans trinyg');
+  console.log(ans);
   var ringNum = gGame.players.get(uid).ring;
+  console.log(ringNum);
   for (var i = 0; i < gSolutions[ringNum].length; i++){
     if (gSolutions[ringNum][i] != ans[i]){
       return false;
