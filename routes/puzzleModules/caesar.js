@@ -10,3 +10,7 @@ function caesar(s, i) {
 	}
 	return output;
 }
+
+function arrayCaesar(words, i) {
+	return words.map(function(w) {return caesar(w,i)});
+}
