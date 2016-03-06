@@ -3,7 +3,7 @@ exports.getPrompt = function(ws){
   for(var i = 0; i < ws.length;i++){
     concat += ws[i];
   }
-  return caesar(concat, Math.floor(Math.random() * 1000));
+  return caesar(concat, Math.floor(Math.random() * 25) + 1);
 }
 
 function caesar(s, i) {
