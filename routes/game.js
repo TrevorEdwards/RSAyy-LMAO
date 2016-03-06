@@ -32,7 +32,7 @@ exports.getPuzzleInfo = function(req, res) {
     if (gGame.players.get(uid).ring >= n) {
       //send the prompt
       if( n >= 0){
-        res.send(gGame.rings[n]);
+        res.send({ prompt : gGame.rings[n]});
       }
     } else {
       //Invalid credentials
@@ -77,7 +77,7 @@ exports.proposeSolution = function(req, res) {
 };
 
 exports.getActiveGame = function(req, res){
-  res.send(gGameNumber);
+  res.send({ gameId : gGameNumber});
 }
 
 //GAME STUFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,6 +193,8 @@ function generateRings(ringCount){
   rings
     .push(final.getPrompt(gGame.finalEncr));
     gSolutions[ringCount] = gFinalPuzzleAnswer;
+
+  return rings;
 }
 
 // Returns an object containing the three words that are a puzzle's answer
@@ -232,9 +234,13 @@ function advanceUser(uid){
 function incrementMap(){
   gMapNumber++;
   gOutputMap = [];
-  for(var i = 0; i < gGame.players.length; i++){
-    gOutputMap.push({name:gGame.players[i].name,ring:gGame.players[i].ring, });
-  }
+  console.log(gGame.players.size);
+  var i = 0;
+  gGame.players.forEach(function(value,key){
+    gOutputMap.push({name:value.name,ring:value.ring, });
+    i++;
+  });
+
 }
 
 //Maps up to three digits to a word
@@ -259,6 +265,7 @@ function addPlayer(name){
 
       gGame.players.set(uid, ply);
       gPlyN[name] = true;
+      incrementMap();
       return uid;
 
 }
