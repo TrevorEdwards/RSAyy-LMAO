@@ -39,6 +39,7 @@ function update(term){
         mid = 0;
         ring = 0;
         getActiveGame();
+        getPuzzleInfo(term, 0);
       } else {
         if(mid < resp.gMapNumber){
           //we're out of date
@@ -82,6 +83,7 @@ function getPuzzleInfo(term, n){
     var obj = JSON.parse(response);
     puzzles[n] =  obj.prompt;
     term.echo("Puzzle "+n+ " is: " + puzzles[n]);
+    $('#puzprompt').text(puzzles[n]);
   });
 }
 

@@ -169,6 +169,8 @@ function update() {
 		pt.txt.y = pt.y+25*Math.sin(pt.cang) -25;
 		if (pt.wr < pt.nr){
 			pt.nr--;
+		} else if (pt.wr > pt.nr){
+			pt.nr++;
 		}
 	}
     //Create group of points for each circle
