@@ -111,7 +111,10 @@ function joinGame(term,name){
 )}
 
 function easyRSA(term,args){
-  if(args.length != 4 ) return;
+  if(args.length != 4 ) {
+    term.echo('Proper usage is: message-number p q private-key');
+    return;
+  }
   httpGetAsync(baseurl + "/easyrsa/"+args[0]+"/"+args[1]+"/"+args[2]+"/"+args[3], function(response){
     var resp = JSON.parse(response);
     term.echo(resp.data);
