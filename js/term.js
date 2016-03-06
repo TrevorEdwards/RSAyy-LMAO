@@ -13,6 +13,7 @@ var lastTrash = "";
 function httpGetAsync(theUrl, callback)
 {
   var xmlHttp = new XMLHttpRequest();
+  xmlHttp.timeout = 2000;
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
     callback(xmlHttp.responseText);
@@ -28,7 +29,6 @@ function update(term){
     httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
       var resp = JSON.parse(response);
       //TRASH TALK @#(*$&@#*($))
-      console.log(resp.msg);
       if(resp.msg != lastTrash && resp.msg != undefined){
         lastTrash = resp.msg;
         responsiveVoice.speak(lastTrash);
