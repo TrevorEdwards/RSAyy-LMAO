@@ -1,4 +1,5 @@
-var game = new Phaser.Game(1024, 800, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render:render });
+var game = new Phaser.Game(1024, 800, Phaser.CANVAS, 'container', { preload: preload, create: create, update: update, render:render });
+
 
 function preload() {
 	//game.load.spritesheet('background', 'assets/BackgroundTest.png', 800, 600);
@@ -78,6 +79,12 @@ function create() {
 		draw_shell.lineStyle(1, randomColor(), 1);
 		draw_shell.drawCircle(game.world.centerX,game.world.centerY, largestRadius / i);
 	}
+
+	//center it
+	game.stage.scale.pageAlignHorizontally = true;
+	game.stage.scale.pageAlignVeritcally = true;
+	//game.stage.scale.refresh();
+	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
 
 
