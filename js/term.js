@@ -141,7 +141,7 @@ jQuery(function($, undefined) {
 
           case "solve":
           var frag = '/solution/';
-          var url = baseurl.concat(frag).concat(uid).concat('/').concat(command);
+          var url = baseurl.concat(frag).concat(uid).concat('/').concat(rest);
           httpGetAsync(url,function(callback){
             var obj = JSON.parse(callback)
             if(obj.correct){
