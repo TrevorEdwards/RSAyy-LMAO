@@ -25,7 +25,6 @@ var safeToQuery;
 //Queries the server every second
 function update(term){
   if(safeToQuery){
-    safeToQuery = false;
     httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
       var resp = JSON.parse(response);
       //TRASH TALK @#(*$&@#*($))
@@ -44,7 +43,6 @@ function update(term){
         }
       }
     });
-    safeToQuery = true;
   }
   timerid = setTimeout(function(){update(term)},1000);
 }//clearInterval(timerid) to stop updating.
