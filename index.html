@@ -1,44 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-	<meta charset='utf-8'>
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
-	
-	<link rel="stylesheet" href="css/jquery.terminal.css">
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="js/jquery.terminal-0.9.3.min.js"></script>
-	<script src="js/phaser.min.js"></script>
-	<title>Trevor's Site</title>
-    </head>
-    
-    <body>
-	      
-	<div id="terminal" class="terminal" style="height: 600px;"></div>
-	<script src="js/term.js"></script>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
 
-	<script type="text/javascript">
+  <link rel="stylesheet" href="css/jquery.terminal.css">
 
-    window.onload = function() {
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="js/jquery.terminal-0.9.3.min.js"></script>
+  <script src="js/phaser.min.js"></script>
+  <title>Testing Things</title>
+  <style type="text/css">
+      body {
+          margin: 0;
+      }
+      footer{
+        text-align: bottom;
+      }
+  </style>
+</head>
 
-        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create });
+<body>
 
-        function preload () {
-
-            game.load.image('logo', 'phaser.png');
-
-        }
-
-        function create () {
-
-            var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-            logo.anchor.setTo(0.5, 0.5);
-
-        }
-
-    };
-
-    </script>
-    </body>
+  <script type="text/javascript" src="js/game.js"></script>
+  <div id="terminal" class="terminal" style="height: 800px;"></div>
+  <script src="js/term.js"></script>
+</body>
 </html>
-
