@@ -35,6 +35,9 @@ function update(term){
       }
       if (resp.winner){
         alert(resp.winner + ' has won the round!');
+        gid = 0;
+        mid = 0;
+        ring = 0;
         getActiveGame();
       } else {
         if(mid < resp.gMapNumber){
