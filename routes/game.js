@@ -173,7 +173,7 @@ function generateRings(ringCount){
 // Returns an object containing the three words that are a puzzle's answer
 // Uses the puzzle key
 function puzzleAnswer(ringIndex){
-
+  
 }
 
 //Checks that a given answer is equal to the correct.  Advances the user if so and returns true.
