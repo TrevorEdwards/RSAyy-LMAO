@@ -82,7 +82,7 @@ function getPuzzleInfo(term, n){
 
 
 function getActiveGame(term){
-  httpGetAsync(baseurl+ '/activegame', function(respone){
+  httpGetAsync(baseurl+ '/activegame', function(response){
     var obj = JSON.parse(response);
     gid = response.gameId;
   });
