@@ -173,7 +173,7 @@ function generateRings(ringCount){
 // Returns an object containing the three words that are a puzzle's answer
 // Uses the puzzle key
 function puzzleAnswer(ringIndex){
-  
+
 }
 
 //Checks that a given answer is equal to the correct.  Advances the user if so and returns true.
@@ -232,13 +232,9 @@ function addPlayer(name){
   ply.ring = 0;
   ply.name = name;
 
-  if (uidMap.has(uid)) {
-      return null;
-  } else {
-      uidMap.set(uid, ply);
+      gGame.players.set(uid, ply);
       gPlyN[name] = true;
       return uid;
-  }
 
 }
 
