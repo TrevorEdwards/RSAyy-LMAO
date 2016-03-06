@@ -70,7 +70,9 @@ function trashTalk(msg){
 
 function moveOn(term){
   ring++;
-  getPuzzleInfo(term,ring);
+  if(ring <= circleCount){
+      getPuzzleInfo(term,ring);
+  }
   //win?
 }
 
