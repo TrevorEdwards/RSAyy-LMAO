@@ -47,7 +47,7 @@ function randomColorString(){
 function renderOne(name, ring){
 	var current_angle = Math.random() * 360;
 	var wr = largestRadius / (ring + 1);
-	var r = Math.random() * 500 + largestRadius;
+	var r = Math.random() * 200 + largestRadius * 2;
 	var y = game.world.centerY;
 	var x = game.world.centerX;
 		var point = new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle)));
