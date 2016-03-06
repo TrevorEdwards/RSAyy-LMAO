@@ -18,16 +18,24 @@ var pointRadius = 8;
 var circleCount = 3;
 var playerData = new Map(); //Maps player names to their rings.. not really useful yet
 var pointData = new Map(); //Maps player with a point
+var playerColors = new Map();
+var levelNames = [];
+var activeTexts = [];
 
 
 // Update a player with its ring
 function updatePlayer(name, ring){
 	var ply = playerData.get(name);
-	for(i=0;activePoints.length;i++){
-		playerData.set(name,ring);
-		pointData.set(name,activePoints[i]);
+	var col = playerColors.get(name);
+	if( col == undefined){
+		playerColors.set(name,randomColorString());
 	}
+	playerData.set(name,ring);
 	renderAll();
+}
+
+function randomColorString(){
+	return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
 
 // Renders all players into circles
@@ -36,17 +44,22 @@ function renderAll(){
 	for(i = 0; i < activePoints.length; i++){
 		//TODO: kill point using a phaser method
 	}
+	activeTexts.forEach(function(x){
+		x.destroy();
+	})
 	activePoints = [];
 	var levels = [];
 	for(var i = 0; i < circleCount; i++){
 		levels[i] = 0;
+		levelNames[i] = [];
 	}
 	playerData.forEach(function(value,key){
 		levels[value]++;
+		levelNames[value].push(key);
 	});
 	//Now we have the number of points per level, time to render
 	for(i=0;i<levels.length;i++){
-			renderN(levels[i],game.world.centerX,game.world.centerY, largestRadius / (i+1) );
+			renderN(levels[i],game.world.centerX,game.world.centerY, largestRadius / (i+1), i );
 	}
 }
 
@@ -84,8 +97,8 @@ function create() {
 	game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 }
 
-//Renders N points around point X,Y with radius R
-function renderN(n,x,y,r){
+//Renders N points around point X,Y with radius R, circle c
+function renderN(n,x,y,r,c){
 	if( n == 0 ) return;
 
 	var angle_divisions = (360/n)*(Math.PI/180);
@@ -95,9 +108,11 @@ function renderN(n,x,y,r){
 
 	for (i=0;i<n;i++){
 		var point = new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle)));
+			point.color = playerColors.get(levelNames[c][i]);
 		activePoints.push(point);
 
-		game.add.text(point.x-75,point.y,'Test', { fontSize: '10px', fill: '#FFD700' });
+
+		activeTexts.push( game.add.text(point.x+25*Math.cos(current_angle) -25,point.y+25*Math.sin(current_angle) -25, levelNames[c][i], { fontSize: '8px', fill: playerColors.get(levelNames[c][i])  }));
 		current_angle += angle_divisions;
 	}
 
@@ -125,7 +140,7 @@ function render() {
 
 	for(i=0;i<activePoints.length;i++){
 		point = activePoints[i];
-		game.context.fillStyle = 'rgb(255,255,0)';
+		game.context.fillStyle = point.color;
 		game.context.fillRect(point.x, point.y, 4, 4);
 	}
 }
