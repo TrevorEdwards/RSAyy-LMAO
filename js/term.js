@@ -198,7 +198,7 @@ jQuery(function($, undefined) {
       callback(greet);
     },
     name: 'TrevorTerminal', //not necessary
-    height: 200,
+    height: 100,
     width: 1001,
     prompt: ''});
   });
