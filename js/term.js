@@ -3,6 +3,9 @@ var gamestate = 0;
 var uid = 0;
 var ring = 0;
 var timerid = null;
+var gid = 0;
+var mid = 0;
+var safeToQuery = true;
 
 function httpGetAsync(theUrl, callback)
 {
@@ -15,14 +18,25 @@ function httpGetAsync(theUrl, callback)
   xmlHttp.send(null);
 }
 
+var safeToQuery;
+//Queries the server every second
 function update(){
-    doStuff();
-    timerid = setTimeout(update(),1000);
+
+  if(safeToQuery){
+    safeToQuery = false;
+    httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
+      var resp = JSON.parse(response);
+      console.log(resp);
+    });
+    safeToQuery = true;
+  }
+    timerid = setTimeout(function(){update()},1000);
 }//clearInterval(timerid) to stop updating.
+update();
 
 
-    
-    
+
+
 function joinGame(name){
   var frag = '/joingame/'
   var url = baseurl.concat(frag).concat(name);
@@ -35,7 +49,7 @@ function joinGame(name){
 	uid = obj.uid;
 	gamestate = 1;
 	ring = 0;
-	
+
       term.echo('Welcome');
     }
   }
