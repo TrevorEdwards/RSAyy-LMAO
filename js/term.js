@@ -29,8 +29,9 @@ function update(){
     httpGetAsync(baseurl + "/gameStatus/"+mid+"/"+gid, function(response){
       var resp = JSON.parse(response);
       //TRASH TALK @#(*$&@#*($))
-      if(resp.trash != lastTrash){
-          lastTrash = resp.trash;
+      console.log(resp.msg);
+      if(resp.msg != lastTrash){
+          lastTrash = resp.msg;
         	responsiveVoice.speak(lastTrash);
       }
       if (resp.winner){
@@ -61,7 +62,7 @@ function updateMap(){
 }
 
 function trashTalk(msg){
-  httpGetAsync(baseurl + "/trashTalk/"+msg, function(response){
+  httpGetAsync(baseurl + "/trashTalk/"+msg.trim(), function(response){
 
   });
 }
@@ -99,8 +100,10 @@ jQuery(function($, undefined) {
       if(firstBound != -1){
         firstWord = command.substring(0,firstBound);
       }
+      console.log(firstWord);
       if(firstWord == "trash"){
         trashTalk(command.substring(firstBound,command.length));
+        return;
       }
 
       if(gamestate == 0){
