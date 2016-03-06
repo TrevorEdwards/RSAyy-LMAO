@@ -74,8 +74,9 @@ exports.proposeSolution = function(req, res) {
 
     var uid = req.params.uid;
     var solution = req.params.n;
-
-    res.send({correct:checkAnswer(uid,solution)});
+    var correct = checkAnswer(uid,solution);
+    var bonus = (correct? puzzleAnswer(uid.ring) : 'noop');
+    res.send({correct:checkAnswer(uid,solution), bonus:bonus});
 
 };
 
@@ -200,14 +201,14 @@ function generateRings(ringCount){
 // Returns an object containing the three words that are a puzzle's answer
 // Uses the puzzle key
 function puzzleAnswer(ringIndex){
-  switch(ringIndex) {
-    case 0:
+  switch(gRingNumber - ringIndex) {
+    case 2:
       return gGame.rSAObj.p;
       break;
     case 1:
       return gGame.rSAObj.q;
       break;
-    case 2:
+    case 0:
       return gGame.rSAObj.privkey;
       break;
     default:
