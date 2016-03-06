@@ -135,10 +135,10 @@ jQuery(function($, undefined) {
         var rest = command.substr(firstWord.length + 1);
 
         switch(firstWord){
-          case "help": term.echo("Type in the answer to the problem to proceed");
+          case "help": term.echo("Type in the answer to the problem to proceed.");
           break;
 
-          case "puzzle": term.echo(puzzle[ring]);
+          case "puzzle": term.echo(getPuzzleInfo(term,ring));
           break;
 
           case "solve":
@@ -147,11 +147,11 @@ jQuery(function($, undefined) {
           httpGetAsync(url,function(callback){
             var obj = JSON.parse(callback)
             if(obj.correct){
-              term.echo("Good job son, you got it correct.");
+              term.echo("Good job, you got it correct.");
               moveOn(term);
             }
             else{
-              term.echo("Wrong answer, try again");
+              term.echo("Wrong answer, try again.");
             }
           });
           break;
@@ -164,8 +164,15 @@ jQuery(function($, undefined) {
       term.echo("");
     }
   },{
+    completion: [
+			'help',
+			'solve',
+			'trash',
+			'puzzle',
+		],
+    outputLimit: 6,
     greetings: function(callback){
-      const greet = 'Welcome to the game. Please type your name';
+      const greet = 'Welcome to the game. Please type your name.';
       callback(greet);
     },
     name: 'TrevorTerminal', //not necessary
