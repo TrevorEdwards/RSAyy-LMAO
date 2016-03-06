@@ -88,7 +88,7 @@ exports.proposeSolution = function(req, res) {
 };
 
 exports.getActiveGame = function(req, res){
-  res.send({ gameId : gGameNumber});
+  res.send({ gameId : gGameNumber, circleCount : gRingNumber});
 }
 
 exports.trashTalk = function(req, res){
