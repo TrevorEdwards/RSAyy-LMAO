@@ -82,7 +82,7 @@ exports.proposeSolution = function(req, res) {
     var uid = req.params.uid;
     var solution = req.params.n;
 
-    checkAnswer(uid,solution);
+    res.send({correct:checkAnswer(uid,solution)});
 
 };
 
