@@ -7,9 +7,11 @@ var anagram = require('./anagram');
 var final = require('./final');
 var morse = require('morse');
 
-const normalPuzzles = {
-  caesar
-}
+const normalPuzzles = [
+  caesar,
+  anagram,
+  morse
+]
 
 exports.getNormalPuzzle = function(){
   return normalPuzzles[Math.floor(Math.random() * normalPuzzles.length)];
