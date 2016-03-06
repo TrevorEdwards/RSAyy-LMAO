@@ -143,7 +143,7 @@ function newGame(ringCount) {
   var rSAObj = generateRSAkeys();
   var unencrypted = w1 * 1000000 + w2 * 1000 + w3;
   gFinalEncr = toggleEncrypt(unencrypted, rSAObj.pubkey, rSAObj.p, rSAObj.q);
-  var rings = generateRings();
+  var rings = generateRings(ringCount);
   var players = new Map();
   //encrypt final answer
 

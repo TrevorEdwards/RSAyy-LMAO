@@ -1,6 +1,9 @@
 exports.getPrompt = function(ws){
-  console.log('TODO');
-  return('TODO: ' + ws);
+  var concat = "";
+  for(var i = 0; i < ws.length;i++){
+    concat += ws[i];
+  }
+  return caesar(concat, Math.floor(Math.random() * 1000));
 }
 
 function caesar(s, i) {

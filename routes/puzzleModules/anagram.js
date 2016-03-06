@@ -1,5 +1,14 @@
+exports.getPrompt = function(ws){
+  var concat = "";
+  for(var i = 0; i < ws.length;i++){
+    concat += ws[i];
+  }
+  return anagram(concat);
+}
+
+
 function anagram(s) {
-    q = "";    
+    q = "";
     while (s.length > 0) {
         i = Math.floor(Math.random() * s.length);
         q += s.charAt(i);

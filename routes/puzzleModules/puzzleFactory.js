@@ -9,8 +9,7 @@ var morse = require('morse');
 
 const normalPuzzles = [
   caesar,
-  anagram,
-  morse
+  anagram
 ]
 
 exports.getNormalPuzzle = function(){
