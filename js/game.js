@@ -94,8 +94,7 @@ function renderN(n,x,y,r){
 	var current_angle = 0;
 
 	for (i=0;i<n;i++){
-		new_point = new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle)));
-		activePoints.push(new_point);
+		activePoints.push(new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle))));
 		current_angle += angle_divisions;
 	}
 
@@ -126,7 +125,7 @@ function render() {
 		game.context.fillStyle = 'rgb(255,255,0)';
 		game.context.fillRect(point.x, point.y, 4, 4);
 		var name = pointData.get(point);
-		game.add.text(point.x-75,point.y,name, { fontSize: '32px', fill: '#FFD700' });
+		game.add.text(point.x-75,point.y,n'Test', { fontSize: '10px', fill: '#FFD700' });
 	}
 }
 
