@@ -1,4 +1,4 @@
-var game = new Phaser.Game(1024, 600, Phaser.CANVAS, 'container', { preload: preload, create: create, update: update, render:render });
+var game = new Phaser.Game(1024, 800, Phaser.CANVAS, 'container', { preload: preload, create: create, update: update, render:render });
 
 
 function preload() {
@@ -94,7 +94,10 @@ function renderN(n,x,y,r){
 	var current_angle = 0;
 
 	for (i=0;i<n;i++){
-		activePoints.push(new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle))));
+		var point = new Phaser.Point(x+(r*Math.cos(current_angle)), y+(r*Math.sin(current_angle)));
+		activePoints.push(point);
+
+		game.add.text(point.x-75,point.y,'Test', { fontSize: '10px', fill: '#FFD700' });
 		current_angle += angle_divisions;
 	}
 
@@ -124,8 +127,6 @@ function render() {
 		point = activePoints[i];
 		game.context.fillStyle = 'rgb(255,255,0)';
 		game.context.fillRect(point.x, point.y, 4, 4);
-		var name = pointData.get(point);
-		game.add.text(point.x-75,point.y,n'Test', { fontSize: '10px', fill: '#FFD700' });
 	}
 }
 
@@ -138,7 +139,7 @@ function movePoint(point, ring){
 	}
 	else{
 		var diff = new_x - point.x;
-		for(i=1;i<=10){
+		for(i=1;i<=10;i++){
 			point.x += diff/10;
 		}
 	}
