@@ -215,7 +215,7 @@ function generateRSAkeys(){
 // Creates a list of puzzles representing each ring
 function generateRings(ringCount){
   var rings = [];
-  for(var i = 0; i < ringCount; i++){
+  for(var i = 0; i <= ringCount; i++){
     //Generate the answer
     var w1 = randomWordIndex();
     ans = [gWords[w1]];
@@ -225,10 +225,10 @@ function generateRings(ringCount){
     gSolutions[i] = ans;
   }
   //Last ring
-  var final = puzzleFactory.getFinalPuzzle();
-  rings
-    .push(final.getPrompt(gFinalEncr, gRSAObj.p, gRSAObj.q, gRSAObj.privkey));
-    gSolutions[ringCount] = gFinalPuzzleAnswer;
+  // var final = puzzleFactory.getFinalPuzzle();
+  // rings
+  //   .push(final.getPrompt(gFinalEncr, gRSAObj.p, gRSAObj.q, gRSAObj.privkey));
+  //   gSolutions[ringCount] = gFinalPuzzleAnswer;
 
   return rings;
 }

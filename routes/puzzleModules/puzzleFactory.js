@@ -8,9 +8,9 @@ var final = require('./final');
 var morse = require('./morse');
 
 const normalPuzzles = [
-  caesar,
-  anagram,
-  morse
+  //caesar,
+  anagram, //These are more fun
+  //morse
 ]
 
 exports.getNormalPuzzle = function(){
