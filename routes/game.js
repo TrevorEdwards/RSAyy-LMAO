@@ -12,7 +12,7 @@ var bigInt = require('big-integer');
 //TODO since some of these could end up in DB.  Feel free to put stuff here though
 var gMapNumber = 0; // Update sequence number of map
 var gGameNumber = 0; // Game sequence number
-var gRingNumber = 3; //Number of normal rings
+var gRingNumber = 9; //Number of normal rings -1
 var gGame = {};
 var gPlyN = {}; //All player names
 var gSolutions = [];
