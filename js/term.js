@@ -1,4 +1,4 @@
-var baseurl = "http://rsalmao.azurewebsites.net";
+var baseurl = "http://rsa-lmao.appspot.com";
 var gamestate = 0;
 var uid = 0;
 var ring = 0;
